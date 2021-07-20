@@ -1,5 +1,7 @@
 import random
 import time
+import math
+from rectangle import Rectangle
 
 class Quick:
     #constructor
@@ -7,12 +9,20 @@ class Quick:
         self.type = "QUICK SORT"
         self.complexity = "O(nlog(n))"
         self.background = (0, 77, 92)
-        self.nums = list(range(1,101))
-        random.shuffle(self.nums)
         self.comparisons = 0
         self.swaps = 0
         self.curIndex = -1
         self.pivot = -1
+
+        repeat = .1
+        rectList = []
+        for i in range(1, 101):
+            red   = math.sin(repeat * i + 0) * 127 + 128
+            green = math.sin(repeat * i + 2) * 127 + 128
+            blue  = math.sin(repeat * i + 4) * 127 + 128
+            rectList.append(Rectangle((red, green, blue), i))
+        self.nums = rectList
+        random.shuffle(self.nums)
 
     #sorting algo
     def sort2(self, list):
@@ -46,12 +56,13 @@ class Quick:
             pivot = self.partition(array,start,end)
             self.sort(array,start,pivot-1)
             self.sort(array,pivot+1,end)
+        #time.sleep(3)
 
     def partition(self, array, start, end):
-        x = array[end]
+        x = array[end].height
         i = start-1
         for j in range(start, end+1, 1):
-            if array[j] <= x:
+            if array[j].height <= x:
                 i += 1
                 if i < j:
                     temp = self.nums[j]

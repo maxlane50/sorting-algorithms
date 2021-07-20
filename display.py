@@ -117,6 +117,8 @@ def getRectColor(algo, i):
             color = BLACK
         else:
             color = algo.nums[i].color
+    elif (algo.type == "QUICK SORT"):
+        color = algo.nums[i].color
     return color
 
 def selectionScreen():
