@@ -15,24 +15,51 @@ class Quick:
         self.pivot = -1
 
     #sorting algo
-    def sort(list):
+    def sort2(self, list):
         lower = []
         higher = []
         if (len(list) >= 2):
             pivot = list[len(list)-1]
             for i in range(len(list)):
-                if (value < pivot):
-                    lower.append(value)
+                if (list[i] < pivot):
+                    lower.append(list[i])
                     self.comparisons+=1
-                elif (value == pivot):
+                elif (list[i] == pivot):
                     junk = 1
                     self.comparisons+=2
                 else:
-                    higher.append(value)
+                    higher.append(list[i])
                     self.comparisons+=3
-            return sort(lower) + pivot + sort(higher)
+            pivotList = [pivot]
+            self.nums = lower + pivotList + higher
+            import display
+            display.updateAlgo(self)
+            return self.sort(lower) + pivotList + self.sort(higher)
         else:
             return list
+
+    def sort(self, array=[], start=0, end=0):
+        if array == []:
+            array = self.nums
+            end = len(array) - 1
+        if start < end:
+            pivot = self.partition(array,start,end)
+            self.sort(array,start,pivot-1)
+            self.sort(array,pivot+1,end)
+
+    def partition(self, array, start, end):
+        x = array[end]
+        i = start-1
+        for j in range(start, end+1, 1):
+            if array[j] <= x:
+                i += 1
+                if i < j:
+                    temp = self.nums[j]
+                    self.nums[j] = self.nums[i]
+                    self.nums[i] = temp
+                    import display
+                    display.updateAlgo(self)
+        return i
 
 
 

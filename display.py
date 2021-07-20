@@ -41,8 +41,9 @@ def main():
             algo = Selection()
             algo.sort()
         elif (algoKey == "Q"):
-            algo = Selection()
-            algo.sort(algo.nums)
+            algo = Quick()
+            algo.sort()
+            print(algo.nums)
         elif (algoKey == "I"):
             insertion()
 
@@ -95,8 +96,8 @@ def fillScreen(algo):
     #note: look at making universal update function and outsourcing this for loop
     for i in range(len(algo.nums)):
         color = getRectColor(algo, i)
-        pygame.draw.rect(screen, color, (i*10, 500-(algo.nums[i]*4.9), 10, algo.nums[i]*4.9))
-        pygame.draw.rect(screen, BLACK, (i*10, 500-(algo.nums[i]*4.9), 10, algo.nums[i]*4.9), 1)
+        pygame.draw.rect(screen, color, (i*10, 500-(algo.nums[i].height*4.9), 10, algo.nums[i].height*4.9))
+        pygame.draw.rect(screen, BLACK, (i*10, 500-(algo.nums[i].height*4.9), 10, algo.nums[i].height*4.9), 1)
 
     #make changes to display
     pygame.display.update()
@@ -106,16 +107,16 @@ def getRectColor(algo, i):
     color = WHITE
     if (algo.type == "BUBBLE SORT"):
         if (i == algo.curIndex or i == (algo.curIndex + 1)):
-            color = YELLOW
-        else:
             color = WHITE
+        else:
+            color = algo.nums[i].color
     elif (algo.type == "SELECTION SORT"):
         if (i == algo.curIndex):     
-            color = YELLOW
-        elif(i == algo.minIndex):
-            color = (68, 85, 235)
-        else:
             color = WHITE
+        elif(i == algo.minIndex):
+            color = BLACK
+        else:
+            color = algo.nums[i].color
     return color
 
 def selectionScreen():
