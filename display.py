@@ -2,6 +2,7 @@ import pygame
 import time
 from bubble import Bubble
 from selection import Selection
+from quick import Quick
 pygame.init()
 
 #colors
@@ -40,7 +41,8 @@ def main():
             algo = Selection()
             algo.sort()
         elif (algoKey == "Q"):
-            quick()
+            algo = Selection()
+            algo.sort(algo.nums)
         elif (algoKey == "I"):
             insertion()
 
@@ -49,7 +51,7 @@ def updateAlgo(algo):
     for event in pygame.event.get():
         if (event.type == pygame.QUIT):
             pygame.quit()
-            
+
     fillScreen(algo)
 
     presses = pygame.key.get_pressed()
