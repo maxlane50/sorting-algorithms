@@ -4,11 +4,14 @@ import time
 class Bubble:
     #constructor
     def __init__(self):
-        self.type = "Bubble Sort"
+        self.type = "BUBBLE SORT"
+        self.complexity = "O(n^2)"
+        self.background = (42, 45, 118)
         self.nums = list(range(1,101))
         random.shuffle(self.nums)
         self.comparisons = 0
         self.swaps = 0
+        self.curIndex = -1
 
     #sorting algo
     def sort(self):
@@ -20,6 +23,7 @@ class Bubble:
                     self.nums[j+1] = temp
                     self.swaps+=1
                 self.comparisons+=1
+                self.curIndex = j
                 import display
-                display.updateBubble(self, j)
+                display.updateAlgo(self)
         time.sleep(3)

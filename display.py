@@ -17,7 +17,6 @@ DARKGREEN = (0, 80, 0)
 WIDTH = 1000
 HEIGHT = 500
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-#comment
 
 #set title of display
 pygame.display.set_caption("Sorting Algorithms")
@@ -44,20 +43,20 @@ def main():
         elif (algoKey == "I"):
             insertion()
 
-def updateSelection(algo, curIndex, curMin):
+def updateAlgo(algo):
     for event in pygame.event.get():
         if (event.type == pygame.QUIT):
             pygame.quit()
-
+    
     #set background
-    screen.fill(DARKGREEN)
+    screen.fill(algo.background)
 
     #update statistics
     comparisonsText = statsFont.render("# of Comparisons: " + str(algo.comparisons), True, WHITE)
     swapsText = statsFont.render("# of Swaps: " + str(algo.swaps), True, WHITE)
-    timeCompText = statsFont.render("Time Complexity: O(n^2)", True, WHITE)
-    headerText = headerFont.render("SELECTION SORT", True, WHITE)
-
+    timeCompText = statsFont.render("Time Complexity: " + algo.complexity, True, WHITE)
+    headerText = headerFont.render(algo.type, True, WHITE)
+    #display text
     screen.blit(headerText, (25, 15))
     screen.blit(comparisonsText, (25, 50))
     screen.blit(swapsText, (25, 70))
@@ -67,49 +66,28 @@ def updateSelection(algo, curIndex, curMin):
     color = WHITE
     #note: look at making universal update function and outsourcing this for loop
     for i in range(len(algo.nums)):
-        if (i == curIndex):
+        color = getRectColor(algo, i)
+        pygame.draw.rect(screen, color, (i*10, 500-(algo.nums[i]*4.9), 10, algo.nums[i]*4.9))
+        pygame.draw.rect(screen, BLACK, (i*10, 500-(algo.nums[i]*4.9), 10, algo.nums[i]*4.9), 1)
+
+    #make changes to display
+    pygame.display.update()
+
+def getRectColor(algo, i):
+    color = WHITE
+    if (algo.type == "BUBBLE SORT"):
+        if (i == algo.curIndex or i == (algo.curIndex + 1)):
             color = YELLOW
-        elif(i == curMin):
+        else:
+            color = WHITE
+    elif (algo.type == "SELECTION SORT"):
+        if (i == algo.curIndex):     
+            color = YELLOW
+        elif(i == algo.minIndex):
             color = (68, 85, 235)
         else:
             color = WHITE
-        pygame.draw.rect(screen, color, (i*10, 500-(algo.nums[i]*4.9), 10, algo.nums[i]*4.9))
-        pygame.draw.rect(screen, BLACK, (i*10, 500-(algo.nums[i]*4.9), 10, algo.nums[i]*4.9), 1)
-        
-    pygame.display.update()
-
-
-def updateBubble(bubble, curIndex):
-    for event in pygame.event.get():
-        if (event.type == pygame.QUIT):
-            pygame.quit()
-
-    #set background
-    screen.fill(PURPLE)
-
-    #update statistics
-    comparisonsText = statsFont.render("# of Comparisons: " + str(bubble.comparisons), True, WHITE)
-    swapsText = statsFont.render("# of Swaps: " + str(bubble.swaps), True, WHITE)
-    timeCompText = statsFont.render("Time Complexity: O(n^2)", True, WHITE)
-    headerText = headerFont.render("BUBBLE SORT", True, WHITE)
-
-    screen.blit(headerText, (25, 15))
-    screen.blit(comparisonsText, (25, 50))
-    screen.blit(swapsText, (25, 70))
-    screen.blit(timeCompText, (25, 90))
-
-    #draw rectangles representing the array
-    color = WHITE
-    #note: look at making universal update function and outsourcing this for loop
-    for i in range(len(bubble.nums)):
-        if (i == curIndex or i == (curIndex + 1)):
-            color = YELLOW
-        else:
-            color = WHITE
-        pygame.draw.rect(screen, color, (i*10, 500-(bubble.nums[i]*4.9), 10, bubble.nums[i]*4.9))
-        pygame.draw.rect(screen, BLACK, (i*10, 500-(bubble.nums[i]*4.9), 10, bubble.nums[i]*4.9), 1)
-        
-    pygame.display.update()
+    return color
 
 def selectionScreen():
     keepGoing = True
@@ -169,4 +147,80 @@ def selectionScreen():
 
     return selection
 
+
+#OUTDATED HARDCODED FUNCTIONALITY
+#def updateSelection(algo, curIndex, curMin):
+#   for event in pygame.event.get():
+#
+#        if (event.type == pygame.QUIT):
+#    
+#            pygame.quit()
+#    
+#    #set background
+#    screen.fill(DARKGREEN)
+#    #update statistics
+#    comparisonsText = statsFont.render("# of Comparisons: " + str(algo.comparisons), True, WHITE)
+#    swapsText = statsFont.render("# of Swaps: " + str(algo.swaps), True, WHITE)
+#    timeCompText = statsFont.render("Time Complexity: O(n^2)", True, WHITE)
+#    headerText = headerFont.render(algo.type, True, WHITE)
+#    screen.blit(headerText, (25, 15))
+#    screen.blit(comparisonsText, (25, 50))
+#    screen.blit(swapsText, (25, 70))
+#    screen.blit(timeCompText, (25, 90))
+#    #draw rectangles representing the array
+#    color = WHITE
+#    #note: look at making universal update function and outsourcing this for loop
+#   for i in range(len(algo.nums)):
+#
+#       if (i == curIndex):
+#    
+#           color = YELLOW
+#    
+#        elif(i == curMin):
+#    
+#           color = (68, 85, 235)
+#    
+#       else:
+#    
+#            color = WHITE
+#    
+#       pygame.draw.rect(screen, color, (i*10, 500-(algo.nums[i]*4.9), 10, algo.nums[i]*4.9))
+#
+#       pygame.draw.rect(screen, BLACK, (i*10, 500-(algo.nums[i]*4.9), 10, algo.nums[i]*4.9), 1)
+#
+        
+#
+#    pygame.display.update()
+#def updateBubble(bubble, curIndex):
+#    for event in pygame.event.get():
+#
+#        if (event.type == pygame.QUIT):
+#    
+#            pygame.quit()
+#    
+#    #set background
+#    screen.fill(PURPLE)
+#    #update statistics
+#    comparisonsText = statsFont.render("# of Comparisons: " + str(bubble.comparisons), True, WHITE)
+#    swapsText = statsFont.render("# of Swaps: " + str(bubble.swaps), True, WHITE)
+#    timeCompText = statsFont.render("Time Complexity: O(n^2)", True, WHITE)
+#    headerText = headerFont.render("BUBBLE SORT", True, WHITE)
+#    screen.blit(headerText, (25, 15))
+#    screen.blit(comparisonsText, (25, 50))
+#    screen.blit(swapsText, (25, 70))
+#    screen.blit(timeCompText, (25, 90))
+#    #draw rectangles representing the array
+#    color = WHITE
+#    #note: look at making universal update function and outsourcing this for loop
+#    for i in range(len(bubble.nums)):
+#       if (i == curIndex or i == (curIndex + 1)):
+#           color = YELLOW
+#       else:
+#           color = WHITE
+#       pygame.draw.rect(screen, color, (i*10, 500-(bubble.nums[i]*4.9), 10, bubble.nums[i]*4.9))
+#       pygame.draw.rect(screen, BLACK, (i*10, 500-(bubble.nums[i]*4.9), 10, bubble.nums[i]*4.9), 1)
+#
+#
+#    pygame.display.update()
+ 
 main()
