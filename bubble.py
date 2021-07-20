@@ -1,12 +1,12 @@
 import random
+import time
 
 class Bubble:
     #constructor
     def __init__(self):
         self.type = "Bubble Sort"
-        self.nums = list(range(1,100))
+        self.nums = list(range(1,101))
         random.shuffle(self.nums)
-        print(self.nums)
         self.comparisons = 0
         self.swaps = 0
 
@@ -22,3 +22,4 @@ class Bubble:
                 self.comparisons+=1
                 import display
                 display.updateBubble(self, j)
+        time.sleep(3)
