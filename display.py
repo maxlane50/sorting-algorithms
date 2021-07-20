@@ -1,4 +1,5 @@
 import pygame
+import time
 from bubble import Bubble
 from selection import Selection
 pygame.init()
@@ -43,11 +44,36 @@ def main():
         elif (algoKey == "I"):
             insertion()
 
+
 def updateAlgo(algo):
     for event in pygame.event.get():
         if (event.type == pygame.QUIT):
             pygame.quit()
+            
+    fillScreen(algo)
+
+    presses = pygame.key.get_pressed()
+    if (presses[pygame.K_p]):
+        pauseAlgo(algo)
+        time.sleep(0.2)
+
+
+def pauseAlgo(algo):
+    run = True
+    time.sleep(0.5)
+    while run:
+        for event in pygame.event.get():
+            if (event.type == pygame.QUIT):
+                pygame.quit()
     
+        presses = pygame.key.get_pressed()
+        if (presses[pygame.K_p]):
+            run = False
+        
+        fillScreen(algo)
+
+
+def fillScreen(algo):
     #set background
     screen.fill(algo.background)
 
@@ -72,6 +98,7 @@ def updateAlgo(algo):
 
     #make changes to display
     pygame.display.update()
+
 
 def getRectColor(algo, i):
     color = WHITE
@@ -148,7 +175,11 @@ def selectionScreen():
     return selection
 
 
+
+
+
 #OUTDATED HARDCODED FUNCTIONALITY
+
 #def updateSelection(algo, curIndex, curMin):
 #   for event in pygame.event.get():
 #
