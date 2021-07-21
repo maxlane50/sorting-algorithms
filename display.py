@@ -42,8 +42,8 @@ def main():
             algo.sort()
         elif (algoKey == "Q"):
             algo = Quick()
-            algo.sort()
-            print(algo.nums)
+            algo.sort(0,0)
+            time.sleep(5)
         elif (algoKey == "I"):
             insertion()
 
@@ -118,7 +118,12 @@ def getRectColor(algo, i):
         else:
             color = algo.nums[i].color
     elif (algo.type == "QUICK SORT"):
-        color = algo.nums[i].color
+        if (i == algo.i or i == algo.j):
+            color = WHITE
+        elif (i == algo.pivot):
+            color = BLACK
+        else:
+            color = algo.nums[i].color
     return color
 
 def selectionScreen():

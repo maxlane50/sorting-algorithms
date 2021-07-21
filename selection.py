@@ -13,6 +13,7 @@ class Selection:
         self.curIndex = -1
         self.comparisons = 0
         self.swaps = 0
+
         repeat = .1
         rectList = []
         for i in range(1, 101):
@@ -40,4 +41,4 @@ class Selection:
             self.nums[i] = self.nums[self.minIndex]
             self.nums[self.minIndex] = temp
             self.swaps += 1
-        time.sleep(3)
+        time.sleep(5)

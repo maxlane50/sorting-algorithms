@@ -12,7 +12,11 @@ class Quick:
         self.comparisons = 0
         self.swaps = 0
         self.curIndex = -1
-        self.pivot = -1
+        self.firstCall = True
+
+        self.i = 100
+        self.j = 100
+        self.pivot = 100
 
         repeat = .1
         rectList = []
@@ -25,75 +29,55 @@ class Quick:
         random.shuffle(self.nums)
 
     #sorting algo
-    def sort2(self, list):
-        lower = []
-        higher = []
-        if (len(list) >= 2):
-            pivot = list[len(list)-1]
-            for i in range(len(list)):
-                if (list[i] < pivot):
-                    lower.append(list[i])
-                    self.comparisons+=1
-                elif (list[i] == pivot):
-                    junk = 1
-                    self.comparisons+=2
-                else:
-                    higher.append(list[i])
-                    self.comparisons+=3
-            pivotList = [pivot]
-            self.nums = lower + pivotList + higher
+    def sort(self, start, end):
+        if self.firstCall:
+            start = 0
+            end = len(self.nums) - 1
+            self.firstCall = False
+        if start < end:
+            breakPoint = self.divide(start, end)
+            self.sort(start, breakPoint - 1)
+            self.sort(breakPoint + 1, end)
+
+    def divide(self, start, end):
+        pivot = -69
+        if (((end - start) + 1) % 2) == 0:
+            index = end - ((end - start - 1)/2)
+            index = int(index)
+            pivot = self.nums[index].height
+            self.pivot = index
+        else:
+            index = end - ((end - start)/2)
+            index = int(index)
+            pivot = self.nums[index].height
+            self.pivot = index
+        i = start
+        j = end
+        pauseI = False
+        pauseJ = False
+        while i < j:
+            if (self.nums[i].height >= pivot):
+                pauseI = True
+            if (self.nums[j].height <= pivot):
+                pauseJ = True
+            if (pauseI and pauseJ):
+                temp = self.nums[i]
+                self.nums[i] = self.nums[j]
+                self.nums[j] = temp
+                self.swaps+=1
+                pauseJ = False
+                pauseI = False
+            elif pauseI:
+                j -= 1
+            elif pauseJ:
+                i += 1
+            else:
+                j -= 1
+                i += 1
+            self.i = i
+            self.j = j
+
             import display
             display.updateAlgo(self)
-            return self.sort(lower) + pivotList + self.sort(higher)
-        else:
-            return list
-
-    def sort(self, array=[], start=0, end=0):
-        if array == []:
-            array = self.nums
-            end = len(array) - 1
-        if start < end:
-            pivot = self.partition(array,start,end)
-            self.sort(array,start,pivot-1)
-            self.sort(array,pivot+1,end)
-        #time.sleep(3)
-
-    def partition(self, array, start, end):
-        x = array[end].height
-        i = start-1
-        for j in range(start, end+1, 1):
-            if array[j].height <= x:
-                i += 1
-                if i < j:
-                    temp = self.nums[j]
-                    self.nums[j] = self.nums[i]
-                    self.nums[i] = temp
-                    import display
-                    display.updateAlgo(self)
         return i
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        for i in range(len(self.nums)):
-            for j in range (len(self.nums)-i-1):
-                if (self.nums[j+1] < self.nums[j]):
-                    temp = self.nums[j]
-                    self.nums[j] = self.nums[j+1]
-                    self.nums[j+1] = temp
-                    self.swaps+=1
-                self.comparisons+=1
-                self.curIndex = j
-                import display
-                display.updateAlgo(self)
-        time.sleep(3)

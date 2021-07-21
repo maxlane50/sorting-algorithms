@@ -36,4 +36,4 @@ class Bubble:
                 self.curIndex = j
                 import display
                 display.updateAlgo(self)
-        time.sleep(3)
+        time.sleep(5)
