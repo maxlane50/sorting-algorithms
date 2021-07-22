@@ -56,10 +56,15 @@ class Quick:
         pauseI = False
         pauseJ = False
         while i < j:
-            if (self.nums[i].height >= pivot):
-                pauseI = True
-            if (self.nums[j].height <= pivot):
-                pauseJ = True
+            if (not pauseI):
+                self.comparisons+=1
+                if (self.nums[i].height >= pivot):
+                    pauseI = True
+            if (not pauseJ):
+                self.comparisons+=1
+                if (self.nums[j].height <= pivot):
+                    pauseJ = True
+
             if (pauseI and pauseJ):
                 temp = self.nums[i]
                 self.nums[i] = self.nums[j]

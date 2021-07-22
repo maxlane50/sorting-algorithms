@@ -3,6 +3,7 @@ import time
 from bubble import Bubble
 from selection import Selection
 from quick import Quick
+from insertion import Insertion
 pygame.init()
 
 #colors
@@ -45,7 +46,8 @@ def main():
             algo.sort(0,0)
             time.sleep(5)
         elif (algoKey == "I"):
-            insertion()
+            algo = Insertion()
+            algo.sort()
 
 
 def updateAlgo(algo):
@@ -122,6 +124,11 @@ def getRectColor(algo, i):
             color = WHITE
         elif (i == algo.pivot):
             color = BLACK
+        else:
+            color = algo.nums[i].color
+    elif (algo.type == "INSERTION SORT"):
+        if (algo.curIndex == i):
+            color = WHITE
         else:
             color = algo.nums[i].color
     return color
