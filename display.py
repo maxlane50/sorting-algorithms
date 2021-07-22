@@ -4,17 +4,19 @@ from bubble import Bubble
 from selection import Selection
 from quick import Quick
 from insertion import Insertion
+from titleArray import TitleArray
 pygame.init()
 
 #colors
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-LIGHTBLUE = (68, 85, 90)
+LIGHTBLUE = (0, 157, 255)
 PURPLE = (42, 45, 118)
 WHITE = (255, 255, 255)
 GREEN = (0, 225, 0)
 DARKGREEN = (0, 80, 0)
+GRAY = (250, 252, 187)
 
 #initialize display with given dimensions 
 WIDTH = 1000
@@ -87,11 +89,6 @@ def fillScreen(algo):
     swapsText = statsFont.render("# of Swaps: " + str(algo.swaps), True, WHITE)
     timeCompText = statsFont.render("Time Complexity: " + algo.complexity, True, WHITE)
     headerText = headerFont.render(algo.type, True, WHITE)
-    #display text
-    screen.blit(headerText, (25, 15))
-    screen.blit(comparisonsText, (25, 50))
-    screen.blit(swapsText, (25, 70))
-    screen.blit(timeCompText, (25, 90))
 
     #draw rectangles representing the array
     color = WHITE
@@ -100,6 +97,12 @@ def fillScreen(algo):
         color = getRectColor(algo, i)
         pygame.draw.rect(screen, color, (i*10, 500-(algo.nums[i].height*4.9), 10, algo.nums[i].height*4.9))
         pygame.draw.rect(screen, BLACK, (i*10, 500-(algo.nums[i].height*4.9), 10, algo.nums[i].height*4.9), 1)
+
+    #display text
+    screen.blit(headerText, (25, 15))
+    screen.blit(comparisonsText, (25, 50))
+    screen.blit(swapsText, (25, 70))
+    screen.blit(timeCompText, (25, 90))
 
     #make changes to display
     pygame.display.update()
@@ -141,18 +144,26 @@ def selectionScreen():
     optionsFont = pygame.font.SysFont('impact', 45)
 
     #title text
-    titleText = titleFont.render('ALGORITHM VISUALIZATION', True, YELLOW)
-    subText = optionsFont.render('(PRESS KEY FOR DESIRED ALGORITHM)', True, YELLOW)
+    titleText = titleFont.render('ALGORITHM VISUALIZATION', True, GRAY)
+    subText = optionsFont.render('(PRESS KEY FOR DESIRED ALGORITHM)', True, GRAY)
     titleText_rect = titleText.get_rect(center = (WIDTH/2, 125))
     subText_rect = subText.get_rect(center = (WIDTH/2, 175))
 
 
     #options text
-    bubbleText = optionsFont.render('BUBBLE SORT ("B")', True, LIGHTBLUE)
-    selectionText = optionsFont.render('SELECTION SORT ("S")', True, LIGHTBLUE)
-    insertText = optionsFont.render('INSERTION SORT ("I")', True, LIGHTBLUE)
-    quickText = optionsFont.render('QUICK SORT ("Q")', True, LIGHTBLUE)
+    bubbleText = optionsFont.render('BUBBLE SORT ("B")', True, GRAY)
+    selectionText = optionsFont.render('SELECTION SORT ("S")', True, GRAY)
+    insertText = optionsFont.render('INSERTION SORT ("I")', True, GRAY)
+    quickText = optionsFont.render('QUICK SORT ("Q")', True, GRAY)
+    leftBracketText = optionsFont.render("[", True, WHITE)
+    rightBracketText = optionsFont.render("]", True, WHITE)
+    commaText = optionsFont.render(",", True, WHITE)
     selection = ""
+
+    #create random nums array
+    array1 = TitleArray()
+    array2 = TitleArray()
+
     while keepGoing:
         #if user exits window quit display
         for event in pygame.event.get():
@@ -169,6 +180,24 @@ def selectionScreen():
         screen.blit(selectionText, (550, 300))
         screen.blit(quickText, (100, 350))
         screen.blit(insertText, (550, 350))
+
+        #set array text
+        screen.blit(leftBracketText, (10, 20))
+        screen.blit(leftBracketText, (10, 420))
+        screen.blit(rightBracketText, (985, 20))
+        screen.blit(rightBracketText, (985, 420))
+
+        array1.mix()
+        array2.mix()
+
+        for i in range(25):
+            array1NumText = optionsFont.render(str(array1.array[i].value), True, array1.array[i].color)
+            array2NumText = optionsFont.render(str(array2.array[i].value), True, array1.array[i].color)
+            screen.blit(array1NumText, ((i+1)*38, 20))
+            screen.blit(array2NumText, ((i+1)*38, 420))
+            if i != 24:
+                screen.blit(commaText, ((i+1)*38 + 25, 20))
+                screen.blit(commaText, ((i+1)*38 + 25, 420))
 
         #check key presses
         presses = pygame.key.get_pressed()
